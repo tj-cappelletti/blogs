@@ -15,7 +15,7 @@ The integration into `main` via pull requests is to aid in having the content pe
 <!-- ###ARTICLE_TABLE### -->
 | Article                               | Link                                                                           | First Publication | Publication Locations                                             |
 | ------------------------------------- | ------------------------------------------------------------------------------ | ----------------- | ----------------------------------------------------------------- |
-| Ending the Great Debate on Enum Flags | [ending-the-great-debate-on-enum-flags][ending-the-great-debate-on-enum-flags] | 2012-06-03        | [Code Project][ending-the-great-debate-on-enum-flags-codeproject] |
+| Ending the Great Debate on Enum Flags | [ending-the-great-debate-on-enum-flags][ending-the-great-debate-on-enum-flags] | 2011-12-09        | [Code Project][ending-the-great-debate-on-enum-flags-codeproject] |
 <!-- ###ARTICLE_TABLE### -->
 
 <!-- URLs -->
