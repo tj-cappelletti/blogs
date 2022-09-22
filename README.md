@@ -16,6 +16,7 @@ The integration into `main` via pull requests is to aid in having the content pe
 | Article                               | Link                                                                           | First Publication | Publication Locations                                             |
 | ------------------------------------- | ------------------------------------------------------------------------------ | ----------------- | ----------------------------------------------------------------- |
 | Ending the Great Debate on Enum Flags | [ending-the-great-debate-on-enum-flags][ending-the-great-debate-on-enum-flags] | 2011-12-09        | [Code Project][ending-the-great-debate-on-enum-flags-codeproject] |
+| Getting Started with NuGet on GitHub  | [getting-started-with-nuget-on-github][getting-started-with-nuget-on-github]   |                   |                                                                   |
 <!-- ###ARTICLE_TABLE### -->
 
 <!-- URLs -->
@@ -24,3 +25,5 @@ The integration into `main` via pull requests is to aid in having the content pe
 <!-- ending-the-great-debate-on-enum-flags -->
 [ending-the-great-debate-on-enum-flags]: ./ending-the-great-debate-on-enum-flags/README.md
 [ending-the-great-debate-on-enum-flags-codeproject]: https://www.codeproject.com/Articles/396851/Ending-the-Great-Debate-on-Enum-Flags
+
+[getting-started-with-nuget-on-github]: ./getting-started-with-nuget-on-github/README.md
