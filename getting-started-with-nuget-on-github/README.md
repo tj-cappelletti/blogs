@@ -9,20 +9,10 @@ Early adoption was slow, but soon it took off as the community realized the powe
 Fast forward to today, developers and enterprise organizations not only can leverage community NuGet packages but they can also host their own internal NuGet packages.
 Allowing teams to share their code with each other in a manner that has become second nature to .NET developers.
 
-## Why use GitHub to host your NuGet packages?
-As I stated just above, teams have a lot options and maybe too many options to host their own NuGet package.
-Between open source and paid commercial solutions, how does one decide even how to get started?
-To make matters worse, most developers know how to consume NuGet packages but most develoers have never created a NuGet package before.
-They might contribute to one that has all of the automation built already, but they never started from scratch.
-This is where GitHub comes into picture.
-
-Teams or individual developers using GitHub get a feature called GitHub Packages from the start which allows teams and/or individual developers to store NuGet packages, among other type of packages.
-At the time of this writing, the features for GitHub Packages between the various plans are identical, the difference is just the amout of storage you get.
-This is important since there no additional setup or configuration you need to do when using GitHub Cloud.
-If you are a GitHub Enterprise Server (GHES) user, you do need to add an external storage provider (which is a straight forward process) to enable GitHub Packages. Once you do that, all features of GitHub Packages becomes available.
-
-Simply put, GitHub Packages allows you or your team to push your very frist NuGet package in minutes.
-So if you are not leveraging NuGet in your projects now, you could be by the end of the day.
+While the GitHub documentation does a good job at getting you up and running, it does not do a good job at explaining how to make this sustainable.
+During my exploration of this topic, I noticed a lot of blog posts that essentially follow the GitHub documentation.
+This is a concern for me since those writings are not helping teams make this a sustainable pattern.
+My mission with this post is to not only help you get started with using GitHub Packages, but to set you up for long term success.
 
 # Starting with Security
 Security is obviously a hot topic and needs to be the starting point.
@@ -78,6 +68,41 @@ Notice the "Enable SSO" button in the screenshot above.
 This is to allow you to use the token with organizations that have SSO enabled.
 For more information, please read [Authorizing a personal access token for use with SAML single sign-on][authorizing-pat-single-sign-on].
 
+# Adding the GitHub NuGet Registry
+With your PAT in hand, now we can add the NuGet registry to our local machine to support development work.
+Most people will simply add this to a `nuget.config` file in their repository.
+The first issue I have with this is it adds a secret to your repository which is dangerous and bad practice.
+Second, it forces developers to share the same PAT which means it is hard to restrict access (when necessary) and audit/track suspicious activity.
+So let us add the source in a way that will not make matters worse for us using a CLI tool.
+The prefered way is to use the .NET CLI (`dotnet`), but the NuGet CLI is still valid.
+
+### .NET CLI
+```
+dotnet nuget add source --username USERNAME --password GITHUB_PAT --name github "https://nuget.pkg.github.com/OWNER/index.json"
+```
+*Note: Non-Windows users will need to add the flag `--store-password-in-clear-text` as encrypted passwords are not supported outside of Windows at the time of this writing.
+
+### NuGet CLI
+```
+nuget sources Add -UserName USERNAME -Password GITHUB_PAT -Name "github" -Source "https://nuget.pkg.github.com/OWNER/index.json"
+```
+
+Let's take a moment to break this command down.
+First, this will command will add a new source to your [global NuGet configuration][common-nuget-configurations].
+It will use the `name` argument to give it a way for you to identify it tools such as Visual Studio.
+The `username` and `password` arguments specificy the credentials being use to connect to the registry.
+At the time of this writing, the user name is essentially ignored by GitHub so you can leave it as "USERNAME" or put your GitHub handle in it's place.
+I prefer to use the GitHub handle as it can help you remember what identity the PAT is tied too in the event you are managing multiple identities.
+The `password` arugment needs to be your PAT that you want to authenticate with.
+The `source` argument (which is position implied with the `dotnet` command) is the URL of the registry feed.
+```
+https://nuget.pkg.github.com/OWNER/index.json
+```
+These are well-known URLs to make use of your registry, simply replace the `OWNER` portion of the URL with the owner of the repository that **published** the NuGet package.
+In the enterprise setting, this will be your GitHub organization.
+If you run multiple orgnanizations in your enterprise, you may need to add a source for each organzation that contains NuGet packages you want to consume.
+
 <!-- Links -->
 [creating-a-personal-access-token]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 [authorizing-pat-single-sign-on]: https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on
+[common-nuget-configurations]: https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior
